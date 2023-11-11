@@ -55,7 +55,7 @@ def download_images(path, key) :
 def main():
     directory = os.getcwd()
     download_images(directory, 'cat')
-    #download_images(directory, 'dog')
+    download_images(directory, 'dog')
 
 if __name__ == "__main__":
     main()
