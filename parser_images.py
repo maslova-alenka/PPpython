@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-import re
 
 URL="https://yandex.ru/images/"
 HEADERS={"User-Agent":"Mozilla/5.0"}
@@ -21,10 +20,10 @@ def download_images(path, key) :
         os.mkdir("dataset")
     os.chdir("dataset")
 
-    count = 990#  990 960
-    page = 33 #   33  32
+    count = 990
+    page = 33 
     
-    #for count in range(1000):
+
     while count < 1000:
         key1=key.replace(" ", "%20")
         url = f'{URL}search?p={page}&text={key}'
@@ -34,7 +33,7 @@ def download_images(path, key) :
         soup = BeautifulSoup(response.text, 'lxml')
         images = soup.findAll('img', class_='serp-item__thumb justifier__thumb')
     
-        #try:
+ 
         if not images:
             print("No images.")
             break
@@ -49,8 +48,7 @@ def download_images(path, key) :
                 count += 1
         print(count)
         page += 1
-        #except: 
-         #   pass
+
             
 def main():
     directory = os.getcwd()

@@ -38,9 +38,6 @@ def main():
                 class_name= 'dog'  
             writer.writerow([full_path, rel_path, class_name])
     
-    
-    
-    
-    
+       
 if __name__ == "__main__":
     main()
