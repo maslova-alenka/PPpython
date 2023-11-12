@@ -3,8 +3,6 @@ import csv
 
 from typing import List 
 
-import os
-
 def get_full_paths(class_name: str)->List[str]:
     dataset_dir = 'dataset'
     full_path = os.path.abspath(dataset_dir)
