@@ -3,6 +3,18 @@ import csv
 import shutil
 
 def get_full_paths2(class_name: str) -> list:
+    """
+    Возвращает список измененных абсолютных путей для изображений
+
+    Данная функция возвращает список абсолютных путей для всех изображений определенного
+    класса, переданного в функцию, после перемещения изображений в другую директорию
+    Parameters
+        class_name : str
+        Имя класса
+    Returns
+        list
+        Список абсолютных путей к изображениям
+    """
     full_path = os.path.abspath('dataset2')
     image_names = os.listdir(full_path)
     image_class_names = [name for name in image_names if class_name in name]
@@ -11,6 +23,18 @@ def get_full_paths2(class_name: str) -> list:
     return image_full_paths
 
 def get_relative_paths2(class_name: str) -> list:
+    """
+    Возвращает список измененных относительных путей для изображений
+
+    Данная функция возвращает список относительных путей для всех изображений определенного класса, 
+    переданного в функцию, после перемещения изображений в другую директорию
+    Parameters
+        class_name : str
+        Имя класса
+    Returns
+        list
+        Список относительных путей к изображениям
+    """
     rel_path = os.path.abspath('dataset2')
     image_names = os.listdir(rel_path)
     image_class_names = [name for name in image_names if class_name in name]
@@ -19,6 +43,18 @@ def get_relative_paths2(class_name: str) -> list:
     return image_rel_paths
 
 def replace_images(class_name: str) -> list:
+    """
+    Изменяет имена изображений и переносит их в другую директорию
+
+    Данная функция изменяет имена изображений, объединяя номер изображения и класс в формате class_number.jpg, 
+    переносит изображения в директорию dataset и удаляет папку, где хранились изображения класса
+
+    Parameters
+        class_name : str
+        Имя класса
+    Returns
+        None
+    """
     rel_path = os.path.relpath('dataset2')
     class_path = os.path.join(rel_path, class_name)
     image_names = os.listdir(class_path)

@@ -4,6 +4,18 @@ import csv
 from typing import List 
 
 def get_full_paths(class_name: str)->List[str]:
+    """
+    Возвращает список абсолютных путей для изображений
+
+    Данная функция возвращает список абсолютных путей для всех изображений определенного
+    класса, переданного в функцию
+    Parameters
+        class_name : str
+        Имя класса
+    Returns
+        list
+        Список абсолютных путей к изображениям
+    """
     dataset_dir = 'dataset'
     full_path = os.path.abspath(dataset_dir)
     class_path = os.path.join(full_path, class_name)
@@ -12,6 +24,18 @@ def get_full_paths(class_name: str)->List[str]:
     return image_full_paths
 
 def get_relative_paths(class_name: str)->List[str]:
+    """
+    Возвращает список относительных путей путей для изображений
+
+    Данная функция возвращает список относительных путей относительно файла dataset для 
+    всех изображений определенного класса, переданного в функцию
+    Parameters
+        class_name : str
+        Имя класса
+    Returns
+        list
+        Список относительных путей к изображениям
+    """
     dataset_dir = 'dataset'
     rel_path = os.path.relpath(dataset_dir)
     class_path = os.path.join(rel_path, class_name)
