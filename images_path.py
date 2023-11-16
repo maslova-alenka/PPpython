@@ -43,7 +43,7 @@ def get_relative_paths(class_name: str)->List[str]:
     image_rel_paths = [os.path.join(class_path, name) for name in image_names]
     return image_rel_paths
 
-def main():
+def create_annotation():
     class_cat="cat"
     class_dog="dog"
     
@@ -59,5 +59,5 @@ def main():
         for full_path, rel_path in zip(dog_full_paths, dog_rel_paths):
             writer.writerow([full_path, rel_path, class_dog])
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

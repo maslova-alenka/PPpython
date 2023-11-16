@@ -73,7 +73,7 @@ def replace_images(class_name: str) -> list:
     os.chdir('..')
 
 
-def main():
+def create_dataset2():
     class_cat="cat"
     class_dog="dog"
     
@@ -87,6 +87,10 @@ def main():
     replace_images(class_cat)
     replace_images(class_dog)
     
+def create_annotation2():
+    class_cat="cat"
+    class_dog="dog"
+    
     cat_full_paths = get_full_paths2(class_cat)
     cat_rel_paths = get_relative_paths2(class_cat)
     dog_full_paths = get_full_paths2(class_dog)
@@ -99,5 +103,5 @@ def main():
         for full_path, rel_path in zip(dog_full_paths, dog_rel_paths):
             writer.writerow([full_path, rel_path, class_dog])
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
