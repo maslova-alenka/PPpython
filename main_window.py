@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import *
 
 from images_path import create_annotation
 from images_copy import create_dataset2, create_annotation2
+from images_random import create_dataset3, create_annotation3
 from images_iterator import Iterator
 
 class MainWindow(QMainWindow):
@@ -15,6 +16,8 @@ class MainWindow(QMainWindow):
         self.initUI()
         self.initIterator()
         self.createMenuBar()
+        self.createAction()
+        self.createToolBar()
         
     def initUI(self):
     
@@ -101,6 +104,45 @@ class MainWindow(QMainWindow):
         self.annotMenu = menuBar.addMenu('&Annotation')
         
         self.dataMenu=menuBar.addMenu('&Datasets')
+        
+    def createToolBar(self):
+        fileToolBar=self.addToolBar('File')
+        fileToolBar.addAction(self.exitAction)
+        
+        annotToolBar=self.addToolBar('File')
+        annotToolBar.addAction(self.createAnnotAction)
+        
+    def createAction(self):
+        self.exitAction = QAction('&Exit')
+        self.exitAction.triggered.connect(qApp.quit)
+
+        self.changeAction = QAction('&Change dataset')
+        self.changeAction.triggered.connect(self.changeDataset)
+
+        self.createAnnotAction = QAction('&Create annotation for current dataset')
+        self.createAnnotAction.triggered.connect(self.createAnnotation)
+
+        self.createData2Action = QAction('&Create dataset2')
+        self.createData2Action.triggered.connect(self.createDataset2)
+
+        self.createData3Action = QAction('&Create dataset3')
+        self.createData3Action.triggered.connect(self.createDataset3)
+        
+    def createAnnotation(self):
+        if 'dataset2' in str(self.folderpath):
+            create_annotation2()
+        elif 'dataset3' in str(self.folderpath):
+            create_annotation3()
+        elif 'dataset' in str(self.folderpath):
+            create_annotation()
+            
+    def createDataset2(self):
+        create_dataset2()
+        self.dataMenu.addAction(self.createData3Action)
+        
+        
+    def createDataset3(self):
+        create_dataset3()
         
         
     def closeEvent(self,event):
