@@ -1,10 +1,8 @@
-from PyQt5.QtWidgets import *
 import sys
 
-from PyQt5.QtWidgets import QWidget, QPushButton, QApplication
-from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtWidgets import *
 
 from images_path import create_annotation
 from images_copy import create_dataset2, create_annotation2
@@ -15,8 +13,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         
         self.initUI()
+        self.initIterator()
         self.createMenuBar()
-        # self.initIterator()
         
     def initUI(self):
     
@@ -26,12 +24,7 @@ class MainWindow(QMainWindow):
         # qbtn.resize(qbtn.sizeHint())
         # qbtn.move(50,50)
                 
-        # self.setGeometry(300,300,300,200)
-        
-        # self.menu_bar = self.menuBar()
-        # self.dataMenu = self.menu_bar.addMenu("Data")
-        
-        self.resize(500,150)
+        self.resize(1200,900)
         self.center()
         self.setWindowTitle('Cat and Dog')
         self.centralWidget = QWidget()
@@ -39,26 +32,75 @@ class MainWindow(QMainWindow):
         
         cat_btn=QPushButton('Next cat',self)
         dog_btn=QPushButton('Next dog',self)
-        
-        self.showMaximized()
 
         
+        self.lbl = QLabel(self)
         
-    # def initIterator(self):
-    #     self.cat=Iterator('cat','dataset')
-    #     self.dog=Iterator('dog','dataset')
+        hbox = QHBoxLayout()
+        hbox.addSpacing(1)
+        hbox.addWidget(cat_btn)
+        hbox.addWidget(dog_btn)
+
+        vbox = QVBoxLayout()
+        vbox.addSpacing(1)
+        vbox.addWidget(self.lbl)
+        vbox.addLayout(hbox)
+
+        self.centralWidget.setLayout(vbox)
+        
+        cat_btn.clicked.connect(self.nextcat)
+        dog_btn.clicked.connect(self.nextdog)
+
+        self.folderpath = ' '
+        
+        #self.showMaximized()
+        
+        self.show()
+     
+    def initIterator(self):
+        self.cat=Iterator('cat','dataset')
+        self.dog=Iterator('dog','dataset')
+        
+    def nextcat(self):
+        lbl_size = self.lbl.size()
+        next_image = next(self.cat)
+        if next_image != None:
+            img = QPixmap(next_image).scaled(
+                lbl_size, aspectRatioMode=Qt.KeepAspectRatio)
+            self.lbl.setPixmap(img)
+            self.lbl.setAlignment(Qt.AlignCenter)
+        else:        
+            self.initIterator()
+            self.nextcat()
+                 
+    def nextdog(self):
+        lbl_size = self.lbl.size()
+        next_image = next(self.dog)
+        if next_image != None:
+            img = QPixmap(next_image).scaled(
+                lbl_size, aspectRatioMode=Qt.KeepAspectRatio)
+            self.lbl.setPixmap(img)
+            self.lbl.setAlignment(Qt.AlignCenter)
+        else:        
+            self.initIterator()
+            self.nextdog()
+        
         
     def center(self):
         qr=self.frameGeometry()
         cp=QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
-        self.move(qr.center())
+        self.move(qr.topLeft())
         
     
     def createMenuBar(self):
         
         menuBar = self.menuBar()
         self.fileMenu = menuBar.addMenu('&File')
+        
+        self.annotMenu = menuBar.addMenu('&Annotation')
+        
+        self.dataMenu=menuBar.addMenu('&Datasets')
         
         
     def closeEvent(self,event):
