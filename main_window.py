@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtCore import Qt, QEvent
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import *
 
 from images_path import create_annotation
@@ -15,17 +15,11 @@ class MainWindow(QMainWindow):
         
         self.initUI()
         self.initIterator()
-        self.createMenuBar()
         self.createAction()
+        self.createMenuBar()
         self.createToolBar()
         
     def initUI(self):
-    
-        
-        # qbtn=QPushButton('Quit',self)
-        # qbtn.clicked.connect(QCoreApplication.instance().quit)
-        # qbtn.resize(qbtn.sizeHint())
-        # qbtn.move(50,50)
                 
         self.resize(1200,900)
         self.center()
@@ -56,7 +50,6 @@ class MainWindow(QMainWindow):
 
         self.folderpath = ' '
         
-        #self.showMaximized()
         
         self.show()
      
@@ -99,17 +92,22 @@ class MainWindow(QMainWindow):
     def createMenuBar(self):
         
         menuBar = self.menuBar()
+        
         self.fileMenu = menuBar.addMenu('&File')
+        self.fileMenu.addAction(self.exitAction)
+        self.fileMenu.addAction(self.changeAction)
         
         self.annotMenu = menuBar.addMenu('&Annotation')
+        self.annotMenu.addAction(self.createAnnotAction)
         
         self.dataMenu=menuBar.addMenu('&Datasets')
+        self.dataMenu.addAction(self.createData2Action)
         
     def createToolBar(self):
         fileToolBar=self.addToolBar('File')
         fileToolBar.addAction(self.exitAction)
         
-        annotToolBar=self.addToolBar('File')
+        annotToolBar=self.addToolBar('Annotation')
         annotToolBar.addAction(self.createAnnotAction)
         
     def createAction(self):
@@ -144,10 +142,19 @@ class MainWindow(QMainWindow):
     def createDataset3(self):
         create_dataset3()
         
+    def changeDataset(self):
+        reply= QMessageBox.question(self, 'Message', f'Are you sure you want to change current dataset?\nCurrent dataset: {str(self.folderpath)}',
+                                     QMessageBox.Yes | QMessageBox.No) 
+        if reply == QMessageBox.Yes:
+            self.folderpath = self.folderpath = QFileDialog.getExistingDirectory(
+                self, 'Select Folder')
+        else:
+            pass  
+        
         
     def closeEvent(self,event):
         reply=QMessageBox.question(self,'Message', "Are you sure to quit?", QMessageBox.Yes |
-            QMessageBox.No, QMessageBox.No)
+            QMessageBox.No)
         
         if reply==QMessageBox.Yes:
             event.accept()
