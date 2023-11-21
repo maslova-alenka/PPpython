@@ -133,14 +133,26 @@ class MainWindow(QMainWindow):
             create_annotation3()
         elif 'dataset' in str(self.folderpath):
             create_annotation()
+        compleate = QMessageBox()
+        compleate.setWindowTitle("Message")
+        compleate.setText("Task completed")
+        compleate.exec()
             
     def createDataset2(self):
         create_dataset2()
         self.dataMenu.addAction(self.createData3Action)
+        compleate = QMessageBox()
+        compleate.setWindowTitle("Message")
+        compleate.setText("Task completed")
+        compleate.exec()
         
         
     def createDataset3(self):
         create_dataset3()
+        compleate = QMessageBox()
+        compleate.setWindowTitle("Message")
+        compleate.setText("Task completed")
+        compleate.exec()
         
     def changeDataset(self):
         reply= QMessageBox.question(self, 'Message', f'Are you sure you want to change current dataset?\nCurrent dataset: {str(self.folderpath)}',
