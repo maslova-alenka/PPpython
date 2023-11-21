@@ -36,17 +36,56 @@ print(df[df['Mark'] == 1]['Height'].describe())
 
 #6Task
 def filter_by_class(df: pd.DataFrame, class_mark: int):
+    """
+    Возвращает датафрейм, состоящий из строк, для которых значение метки соответствует заданному
+    
+    Parameters
+      df: pd.DataFrame
+      Исходный датафрейм
+      class_mark: int
+      Метка класса
+    Returns
+      pd.Dataframe
+      Отфильтрованный датафрейм
+    """
     return df[df['Mark'] == class_mark]
 
 
 #7Task
 def filter_whm(df:pd.DataFrame, class_mark: int,max_height: int,  max_width: int):
+    """
+    Возвращает датафрейм, отфильтрованный по заданным параметрам
+    
+    Parameters
+      df: pd.DataFrame
+      Исходный датафрейм
+      class_mark: int
+      Метка класса
+      max_height: int
+      Верхняя граница диапазона для высоты
+      max_width: int
+      Верхняя граница диапазона для ширины
+    Returns
+      pd.Dataframe
+      Отфильтрованный датафрейм
+    """
     return df[(df['Mark'] == class_mark) & (df['Height'] <= max_height) & (df['Width'] <= max_width)]
 
 
 #8Task
-def df_group(df: pd.DataFrame, class_name: int):
-    df = filter_by_class(df, class_name)
+def df_group(df: pd.DataFrame, class_mark: int):
+    """
+    Группирует DataFrame по размеру пикселей изображений и выводит описательные статистики размеров пикселей.
+
+    Parametrs
+        df:pd.DataFrame
+        Исходный датафрейм
+        class_mark: int
+        Метка класса
+    Returns
+        None
+    """
+    df = filter_by_class(df, class_mark)
     img_pixels = []
     for item in df['AbsPath']:
         img = cv2.imread(item)
@@ -57,8 +96,20 @@ def df_group(df: pd.DataFrame, class_name: int):
     
 
 #9Task
-def create_histogram(df: pd.DataFrame, class_name:int):
-    df = filter_by_class(df, class_name)
+def create_histogram(df: pd.DataFrame, class_mark:int):
+    """
+    Создает гистограмму изображения для каждого канала цвета (красный, зеленый, синий) из DataFrame.
+
+    Parameters
+        df:pd.DataFrame
+        Исходный датафрейм
+        class_mark: int
+        Метка класса
+    Returns
+        array
+        Список гистограмм для каждого канала цвета.
+    """
+    df = filter_by_class(df, class_mark)
     df = df.sample()
     for item in df['AbsPath']:
         path = item
@@ -71,6 +122,17 @@ def create_histogram(df: pd.DataFrame, class_name:int):
 
 #10Task
 def histogram(df: pd.DataFrame, class_mark: int):
+    """
+    Визуализирует гистограмму изображения для каждого канала цвета (красный, зеленый, синий) из DataFrame.
+    
+    Parametrs
+        df:pd.DataFrame
+        Исходный датафрейм
+        class_mark: int
+        Метка класса
+    Returns
+        None
+    """
     hist = create_histogram(df, class_mark)
     plt.plot(hist[0], color='b')
     plt.plot(hist[1], color='g')
